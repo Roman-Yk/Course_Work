@@ -1,1 +1,1 @@
-[{"CreationYear":1999,"Price":123.0,"CarName":"T","CarMark":"123","DiscountPrice":0.0,"Arended":true,"ArendPrice":145.0,"Id":"CU-33949"}]
+[{"CreationYear":1999,"Price":123.0,"CarName":"T","CarMark":"123","DiscountPrice":0.0,"Arended":true,"ArendPrice":145.0,"Id":"CU-33949"},{"CreationYear":1899,"Price":1312.0,"CarName":"ASDF","CarMark":"SDFG","DiscountPrice":0.0,"Arended":false,"ArendPrice":100.0,"Id":"YW-18607"},{"CreationYear":1999,"Price":100.0,"CarName":"SDF","CarMark":"GHJ","DiscountPrice":0.0,"Arended":false,"ArendPrice":1000.0,"Id":"GU-59782"}]

@@ -33,19 +33,19 @@ namespace Autosalon
             this.Id = id;
         }
 
-        /*public override string ToString()
+        public override string ToString()
         {
-            return $"|---------------------------------------------\n"+
-            $"Id: { Id }\n"+
-            $"Name: { CarName }\n"
-            Console.WriteLine("|Mark: " + car.CarMark);
-            Console.WriteLine("|Creation Year: " + car.CreationYear);
-            Console.WriteLine("|Price: " + car.Price);
-            Console.WriteLine("|Price with discount: " + (car.DiscountPrice == 0 ? "No discount" : car.DiscountPrice));
-            Console.WriteLine("|Available: " + !car.Arended);
-            Console.WriteLine("|Arend Price: " + car.ArendPrice);
-            Console.WriteLine("|---------------------------------------------";
-        }*/
+            return $"|---------------------------------------------\n" +
+            $"|Id: { Id }\n" +
+            $"|Name: { CarName }\n" +
+            $"|Mark: { CarMark}\n" +
+            $"|Creation Year: { CreationYear}\n" +
+            $"|Price: {Price}\n" +
+            $"|Price with discount: {(DiscountPrice == 0 ? "No discount" : DiscountPrice)}\n" +
+            $"|Available: {!Arended}\n" +
+            $"|Arend Price: { ArendPrice}\n" +
+            $"|---------------------------------------------\n";
+        }
 
     }
 }

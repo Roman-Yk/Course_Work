@@ -24,7 +24,7 @@ namespace Autosalon
             double num;
             while (!double.TryParse(Console.ReadLine(), out num))
             {
-                Console.WriteLine("Write a number");
+                Console.WriteLine("Write a double");
             }
             return num;
         }

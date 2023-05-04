@@ -141,7 +141,17 @@ namespace Autosalon
                             double discountPrice = Convert.ToDouble(Console.ReadLine());
                             if (discountPrice > price)
                             {
+                                Console.WriteLine("|---------------------------------------------");
                                 Console.WriteLine("Discount price can't be more that usual price");
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine();
+                            }
+                            else if(arendPrice > price)
+                            {
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine("Arend price can't be more that usual price");
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine();
                             }
                             else if (creation_year < 1886)
                             {

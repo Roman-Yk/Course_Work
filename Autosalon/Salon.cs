@@ -78,7 +78,7 @@ namespace Autosalon
                 {
                     if (!Cars[i].Arended)
                     {
-                        Print(Cars[i]);
+                        Console.WriteLine(Cars[i]);
                         aCount++;
                     }
                     cCount++;
@@ -103,7 +103,7 @@ namespace Autosalon
 
                 for (int i = 0; i < Cars.Count; i++)
                 {
-                    Print(Cars[i]);
+                    Console.WriteLine(Cars[i]);
                 }
 
             }
@@ -123,7 +123,7 @@ namespace Autosalon
 
                 for (int i = 0; i < sCars.Count; i++)
                 {
-                    Print(sCars[i]);
+                    Console.WriteLine(sCars[i]);
                 }
 
             }
@@ -143,7 +143,7 @@ namespace Autosalon
 
                 for (int i = 0; i < sCars.Count; i++)
                 {
-                    Print(sCars[i]);
+                    Console.WriteLine(sCars[i]);
                 }
 
             }
@@ -163,7 +163,7 @@ namespace Autosalon
 
                 for (int i = 0; i < sCars.Count; i++)
                 {
-                    Print(sCars[i]);
+                    Console.WriteLine(sCars[i]);
                 }
 
             }
@@ -183,7 +183,7 @@ namespace Autosalon
 
                 for (int i = 0; i < sCars.Count; i++)
                 {
-                    Print(sCars[i]);
+                    Console.WriteLine(sCars[i]);
                 }
 
             }
@@ -298,7 +298,7 @@ namespace Autosalon
             {
                 for (int i = 0; i < CarsWithYear.Count; i++)
                 {
-                    Print(CarsWithYear[i]);
+                    Console.WriteLine(CarsWithYear[i]);
                 }
             }
             Console.WriteLine();
@@ -306,19 +306,21 @@ namespace Autosalon
 
         public void GetCarsByYearRange(int minYear, int maxYear)
         {
-            List<Car> CarsWithYear = Cars.FindAll(x => x.CreationYear <= maxYear && x.CreationYear >= minYear);
+            int min = minYear > maxYear ? maxYear : minYear;
+            int max = minYear > maxYear ? minYear : maxYear;
+            List<Car> CarsWithYear = Cars.FindAll(x => x.CreationYear <= max && x.CreationYear >= min);
             if (CarsWithYear.Count == 0)
             {
                 Console.WriteLine("|---------------------------------------------");
-                Console.WriteLine("There are no cars available between " + minYear + " and " + maxYear + " years");
+                Console.WriteLine("There are no cars available between " + min + " and " + max + " years");
                 Console.WriteLine("|---------------------------------------------");
             }
             else
             {
-                Console.WriteLine("Cars between " + minYear + " and " + maxYear + " years:");
+                Console.WriteLine("Cars between " + min + " and " + max + " years:");
                 for (int i = 0; i < CarsWithYear.Count; i++)
                 {
-                    Print(CarsWithYear[i]);
+                    Console.WriteLine(CarsWithYear[i]);
                 }
             }
             Console.WriteLine();
@@ -326,18 +328,21 @@ namespace Autosalon
 
         public void GetCarsByPriceRange(int min, int max)
         {
-
-            List<Car> CarsWithPrice = Cars.FindAll(x => x.Price <= max && x.Price >= min);
-            Console.WriteLine("Cars with price range " + min + " - " + max + ": ");
+            int minPrice = min > max ? max : min;
+            int maxPrice = min > max ? min : max;
+            List<Car> CarsWithPrice = Cars.FindAll(x => x.Price <= maxPrice && x.Price >= minPrice);
+            Console.WriteLine("Cars with price range " + minPrice + " - " + maxPrice + ": ");
             if (CarsWithPrice.Count == 0)
             {
-                Console.WriteLine("There are no cars available in range " + min + " and " + max + " dollars");
+                Console.WriteLine("|---------------------------------------------");
+                Console.WriteLine("There are no cars available in range " + minPrice + " and " + maxPrice + " dollars");
+                Console.WriteLine("|---------------------------------------------");
             }
             else
             {
                 for (int i = 0; i < CarsWithPrice.Count; i++)
                 {
-                    Print(CarsWithPrice[i]);
+                    Console.WriteLine(CarsWithPrice[i]);
                 }
             }
             Console.WriteLine();
@@ -367,20 +372,6 @@ namespace Autosalon
             File.WriteAllText("customers.json", customers);
         }
         
-        private void Print(Car car)
-        {
-            Console.WriteLine("|---------------------------------------------");
-            Console.WriteLine("|Id: " + car.Id);
-            Console.WriteLine("|Name: " + car.CarName);
-            Console.WriteLine("|Mark: " + car.CarMark);
-            Console.WriteLine("|Creation Year: " + car.CreationYear);
-            Console.WriteLine("|Price: " + car.Price);
-            Console.WriteLine("|Price with discount: " + (car.DiscountPrice == 0 ? "No discount" : car.DiscountPrice));
-            Console.WriteLine("|Available: " + !car.Arended);
-            Console.WriteLine("|Arend Price: " + car.ArendPrice);
-            Console.WriteLine("|---------------------------------------------");
-        }
-
         private string GenerateCarID()
         {
             Random random = new Random();
