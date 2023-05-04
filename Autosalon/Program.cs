@@ -27,25 +27,7 @@ namespace Autosalon
                     string user_input = Console.ReadLine();
                     if (user_input == "1")
                     {
-                        Console.WriteLine("Please enter your username: ");
-                        string username = Validator.StringValidation();
-                        Console.WriteLine("Please enter your password: ");
-                        string password = Validator.StringValidation();
-                        Console.WriteLine("Please repeat your password: ");
-                        string passwordRepeat = Validator.StringValidation();
-                        Console.WriteLine("Please enter your money amount (1000,2): ");
-                        double money = Validator.DoubleValidation();
-                        if (password == passwordRepeat)
-                        {
-                            Console.WriteLine("Registration successfull");
-                            ActiveCustomer = new Customer(username, money, password);
-                            salon.AddCustomer(ActiveCustomer);
-                            Logged = true;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Passwords don't match");
-                        }
+                        salon.RegisterCustomer();
                     }
                     else if (user_input == "2")
                     {
@@ -89,134 +71,130 @@ namespace Autosalon
                     Console.WriteLine("15) Get my arended cars");
                     Console.WriteLine("16) Get my balance");
                     Console.WriteLine("Write 'exit' to quit");
+
                     string user_input = Console.ReadLine();
-                    if (user_input == "1")
+                    switch (user_input)
                     {
-                        salon.GetAvailableCars();
-                    }
-                    else if (user_input == "2")
-                    {
-                        salon.GetAllCars();
-                    }
-                    else if (user_input == "3")
-                    {
-                        salon.SortByIncreasingPrice();
-                    }
-                    else if (user_input == "4")
-                    {
-                        salon.SortByDescendingPrice();
-                    }
-                    else if (user_input == "5")
-                    {
-                        salon.SortByIncreasingYear();
-                    }
-                    else if (user_input == "6")
-                    {
-                        salon.SortByDescendingYear();
-                    }
-                    else if (user_input == "7")
-                    {
-                        Console.WriteLine("Please enter the year of creation");
-                        int year = Validator.IntValidation();
-                        salon.GetCarsByYear(year);
-                    }
-                    else if (user_input == "8")
-                    {
-                        Console.Write("Please enter the min year of creation: ");
-                        int min_year = Validator.IntValidation();
-                        Console.Write("Please enter the max year of creation: ");
-                        int max_year = Validator.IntValidation();
-                        salon.GetCarsByYearRange(min_year, max_year);
-                    }
-                    else if (user_input == "9")
-                    {
-                        Console.Write("Please enter the min price: ");
-                        int min_price = Validator.IntValidation();
-                        Console.Write("Please enter the max price (111,5): ");
-                        int max_price = Validator.IntValidation();
-                        salon.GetCarsByPriceRange(min_price, max_price);
-                    }
-                    else if (user_input == "10")
-                    {
-                        Console.Write("Please enter car id: ");
-                        int id = Validator.IntValidation();
-                        salon.ArendCar(id, ActiveCustomer);
-                    }
-                    else if (user_input == "11")
-                    {
-                        Console.Write("Please enter car id: ");
-                        int id = Validator.IntValidation();
-                        salon.ReturnCar(id, ActiveCustomer);
-                    }
-                    else if (user_input == "12")
-                    {
-                        Console.Write("Please enter car creation year: ");
-                        int creation_year = Validator.IntValidation();
-                        Console.Write("Please enter car price (111,5): ");
-                        double price = Validator.DoubleValidation();
-                        Console.Write("Please enter car name: ");
-                        string name = Validator.StringValidation();
-                        Console.Write("Please enter car mark: ");
-                        string mark = Validator.StringValidation();
-                        Console.Write("Please enter car arend price: ");
-                        double arendPrice = Validator.DoubleValidation();
-                        Console.Write("Please enter car with discount price if any discount present else write 0: ");
-                        double discountPrice = Convert.ToDouble(Console.ReadLine());
-                        if (discountPrice > price)
-                        {
-                            Console.WriteLine("Discount price can't be more that usual price");
-                        }
-                        else if (creation_year < 1886)
-                        {
-                            Console.WriteLine();
+                        case "1":
+                            salon.GetAvailableCars();
+                            break;
+                        case "2":
+                            salon.GetAllCars();
+                            break;
+                        case "3":
+                            salon.SortByIncreasingPrice();
+                            break;
+                        case "4":
+                            salon.SortByDescendingPrice();
+                            break;
+                        case "5":
+                            salon.SortByIncreasingYear();
+                            break;
+                        case "6":
+                            salon.SortByDescendingYear();
+                            break;
+                        case "7":
+                            Console.WriteLine("Please enter the year of creation");
+                            int year = Validator.IntValidation();
+                            salon.GetCarsByYear(year);
+                            break;
+                        case "8":
+                            Console.Write("Please enter the min year of creation: ");
+                            int min_year = Validator.IntValidation();
+                            Console.Write("Please enter the max year of creation: ");
+                            int max_year = Validator.IntValidation();
+                            salon.GetCarsByYearRange(min_year, max_year);
+                            break;
+                        case "9":
+                            Console.Write("Please enter the min price: ");
+                            int min_price = Validator.IntValidation();
+                            Console.Write("Please enter the max price (111,5): ");
+                            int max_price = Validator.IntValidation();
+                            salon.GetCarsByPriceRange(min_price, max_price);
+                            break;
+                        case "10":
+                            {
+                                Console.Write("Please enter car id: ");
+                                string id = Validator.StringValidation();
+                                salon.ArendCar(id, ActiveCustomer);
+                            }
+                            break;
+                        case "11":
+                            {
+                                Console.Write("Please enter car id: ");
+                                string id = Validator.StringValidation();
+                                salon.ReturnCar(id, ActiveCustomer);
+                            }
+                            break;
+                        case "12":
+                            Console.Write("Please enter car creation year: ");
+                            int creation_year = Validator.IntValidation();
+                            Console.Write("Please enter car price (111,5): ");
+                            double price = Validator.DoubleValidation();
+                            Console.Write("Please enter car name: ");
+                            string name = Validator.StringValidation();
+                            Console.Write("Please enter car mark: ");
+                            string mark = Validator.StringValidation();
+                            Console.Write("Please enter car arend price: ");
+                            double arendPrice = Validator.DoubleValidation();
+                            Console.Write("Please enter car with discount price if any discount present else write 0: ");
+                            double discountPrice = Convert.ToDouble(Console.ReadLine());
+                            if (discountPrice > price)
+                            {
+                                Console.WriteLine("Discount price can't be more that usual price");
+                            }
+                            else if (creation_year < 1886)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine("The first car was created in 1886");
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine();
+                            }
+                            else if (creation_year > 2023)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine("Are you from future?");
+                                Console.WriteLine("|---------------------------------------------");
+                                Console.WriteLine();
+                            }
+                            else
+                            {
+                                salon.AddCar(creation_year, price, name, arendPrice, discountPrice, mark);
+                            }
+                            break;
+
+                        case "13":
+                            {
+                                Console.Write("Please enter car id: ");
+                                string id = Validator.StringValidation();
+                                salon.BuyCar(id, ActiveCustomer);
+                                break;
+                            }
+
+                        case "14":
+                            salon.GetAllCustomers();
+                            break;
+
+                        case "15":
+                            ActiveCustomer.GetMyArendedCars();
+                            break;
+
+                        case "16":
+                            ActiveCustomer.GetBalance();
+                            break;
+
+                        case "exit":
+                            return;
+
+                        default:
                             Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine("The first car was created in 1886");
+                            Console.WriteLine("Please, choose a correct option");
                             Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine();
-                        }
-                        else if (creation_year > 2023)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine("Are you from future?");
-                            Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            salon.AddCar(creation_year, price, name, arendPrice, discountPrice, mark);
-                        }
+                            break;
                     }
-                    else if (user_input == "13")
-                    {
-                        Console.Write("Please enter car id: ");
-                        int id = Validator.IntValidation();
-                        salon.BuyCar(id, ActiveCustomer);
-                    }
-                    else if (user_input == "14")
-                    {
-                        salon.GetAllCustomers();
-                    }
-                    else if (user_input == "15")
-                    {
-                        ActiveCustomer.GetMyArendedCars();
-                    }
-                    else if (user_input == "16")
-                    {
-                        ActiveCustomer.GetBalance();
-                    }
-                    else if (user_input == "exit")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("|---------------------------------------------");
-                        Console.WriteLine("Please, choose a correct option");
-                        Console.WriteLine("|---------------------------------------------");
-                    }
-                }
-                                
+                }           
             }
 
             salon.SaveData();

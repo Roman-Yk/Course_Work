@@ -15,14 +15,14 @@ namespace Autosalon
         public double DiscountPrice { get; set; }
         public bool Arended { get; set; }
         public double ArendPrice { get; set; }
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public Car()
         {
 
         }
 
-        public Car(int id, int year, double price, string name, double discount, double arendPrice, string mark)
+        public Car(string id, int year, double price, string name, double discount, double arendPrice, string mark)
         {
             this.CreationYear = year;
             this.Price = price;
@@ -32,6 +32,20 @@ namespace Autosalon
             this.CarMark = mark;
             this.Id = id;
         }
-        
+
+        /*public override string ToString()
+        {
+            return $"|---------------------------------------------\n"+
+            $"Id: { Id }\n"+
+            $"Name: { CarName }\n"
+            Console.WriteLine("|Mark: " + car.CarMark);
+            Console.WriteLine("|Creation Year: " + car.CreationYear);
+            Console.WriteLine("|Price: " + car.Price);
+            Console.WriteLine("|Price with discount: " + (car.DiscountPrice == 0 ? "No discount" : car.DiscountPrice));
+            Console.WriteLine("|Available: " + !car.Arended);
+            Console.WriteLine("|Arend Price: " + car.ArendPrice);
+            Console.WriteLine("|---------------------------------------------";
+        }*/
+
     }
 }
