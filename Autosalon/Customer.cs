@@ -32,21 +32,14 @@ namespace Autosalon
         {
             if(ArendedCars.Count == 0)
             {
-                Console.WriteLine("|---------------------------------------------");
-                Console.WriteLine("You have no arended cars");
-                Console.WriteLine("|---------------------------------------------");
+                Log.Warning("You have no arended cars");
             }
             else
             {
                 for (int i = 0; i < ArendedCars.Count; i++)
                 {
                     Console.WriteLine("|---------------------------------------------");
-                    Console.WriteLine("|Id: " + ArendedCars[i].Id);
-                    Console.WriteLine("|Name: " + ArendedCars[i].CarName);
-                    Console.WriteLine("|Creation Year: " + ArendedCars[i].CreationYear);
-                    Console.WriteLine("|Price: " + ArendedCars[i].Price);
-                    Console.WriteLine("|Discount: " + (ArendedCars[i].DiscountPrice == 0 ? "No discount" : ArendedCars[i].DiscountPrice));
-                    Console.WriteLine("|Arend Price: " + ArendedCars[i].ArendPrice);
+                    Console.WriteLine(ArendedCars[i]);
                     Console.WriteLine("|---------------------------------------------");
                 }
             }

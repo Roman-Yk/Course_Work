@@ -43,12 +43,12 @@ namespace Autosalon
                         }
                         else
                         {
-                            Console.WriteLine("Customer doesn't exist");
+                            Log.Warning("Customer doesn't exist");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Wrong option");
+                        Log.Warning("Wrong option");
                     }
                 }
                 else
@@ -82,16 +82,16 @@ namespace Autosalon
                             salon.GetAllCars();
                             break;
                         case "3":
-                            salon.SortByIncreasingPrice();
+                            salon.SortByPrice(true);
                             break;
                         case "4":
-                            salon.SortByDescendingPrice();
+                            salon.SortByPrice(false);
                             break;
                         case "5":
-                            salon.SortByIncreasingYear();
+                            salon.SortByYear(true);
                             break;
                         case "6":
-                            salon.SortByDescendingYear();
+                            salon.SortByYear(false);
                             break;
                         case "7":
                             Console.WriteLine("Please enter the year of creation");
@@ -141,32 +141,24 @@ namespace Autosalon
                             double discountPrice = Convert.ToDouble(Console.ReadLine());
                             if (discountPrice > price)
                             {
-                                Console.WriteLine("|---------------------------------------------");
-                                Console.WriteLine("Discount price can't be more that usual price");
-                                Console.WriteLine("|---------------------------------------------");
+                                Log.Warning("Discount price can't be more that usual price");
                                 Console.WriteLine();
                             }
                             else if(arendPrice > price)
                             {
-                                Console.WriteLine("|---------------------------------------------");
-                                Console.WriteLine("Arend price can't be more that usual price");
-                                Console.WriteLine("|---------------------------------------------");
+                                Log.Warning("Arend price can't be more that usual price");
                                 Console.WriteLine();
                             }
                             else if (creation_year < 1886)
                             {
                                 Console.WriteLine();
-                                Console.WriteLine("|---------------------------------------------");
-                                Console.WriteLine("The first car was created in 1886");
-                                Console.WriteLine("|---------------------------------------------");
+                                Log.Warning("The first car was created in 1886");
                                 Console.WriteLine();
                             }
                             else if (creation_year > 2023)
                             {
                                 Console.WriteLine();
-                                Console.WriteLine("|---------------------------------------------");
-                                Console.WriteLine("Are you from future?");
-                                Console.WriteLine("|---------------------------------------------");
+                                Log.Warning("Are you from future?");
                                 Console.WriteLine();
                             }
                             else
@@ -199,9 +191,7 @@ namespace Autosalon
                             return;
 
                         default:
-                            Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine("Please, choose a correct option");
-                            Console.WriteLine("|---------------------------------------------");
+                            Log.Warning("Please, choose a correct option");
                             break;
                     }
                 }           

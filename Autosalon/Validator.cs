@@ -24,7 +24,7 @@ namespace Autosalon
             double num;
             while (!double.TryParse(Console.ReadLine(), out num))
             {
-                Console.WriteLine("Write a double");
+                Console.Write("Write a double: ");
             }
             return num;
         }
@@ -33,7 +33,7 @@ namespace Autosalon
             int num;
             while (!int.TryParse(Console.ReadLine(), out num))
             {
-                Console.WriteLine("Write a number");
+                Console.Write("Write a number: ");
             }
             return num;
         }

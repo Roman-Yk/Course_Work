@@ -35,16 +35,14 @@ namespace Autosalon
 
         public override string ToString()
         {
-            return $"|---------------------------------------------\n" +
-            $"|Id: { Id }\n" +
+            return $"|Id: { Id }\n" +
             $"|Name: { CarName }\n" +
             $"|Mark: { CarMark}\n" +
             $"|Creation Year: { CreationYear}\n" +
             $"|Price: {Price}\n" +
             $"|Price with discount: {(DiscountPrice == 0 ? "No discount" : DiscountPrice)}\n" +
             $"|Available: {!Arended}\n" +
-            $"|Arend Price: { ArendPrice}\n" +
-            $"|---------------------------------------------\n";
+            $"|Arend Price: { ArendPrice}" ;
         }
 
     }

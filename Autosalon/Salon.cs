@@ -52,11 +52,11 @@ namespace Autosalon
             {
                 Car newCar = new Car(ChecKValidId(), year, price, name, discountPrice, arendPrice, mark);
                 Cars.Add(newCar);
-                Warning("New car added");
+                Log.Success("New car added");
             }
             else
             {
-                Warning("Prica can't be negative");
+                Log.Warning("Prica can't be negative");
 
             }
             Console.WriteLine();
@@ -67,7 +67,7 @@ namespace Autosalon
 
             if (Cars.Count == 0)
             {
-                Warning("There are no cars available");
+                Log.Warning("There are no cars available");
             }
             else
             {
@@ -78,14 +78,14 @@ namespace Autosalon
                 {
                     if (!Cars[i].Arended)
                     {
-                        Console.WriteLine(Cars[i]);
+                        Log.CarInfo(Cars[i]);
                         aCount++;
                     }
                     cCount++;
                 }
                 if(aCount == 0 && cCount != 0)
                 {
-                    Warning("There are no cars available");
+                    Log.Warning("There are no cars available");
                 }
             }
             Console.WriteLine();
@@ -95,7 +95,7 @@ namespace Autosalon
         {
             if (Cars.Count == 0)
             {
-                Warning("There are no cars available");
+                Log.Warning("There are no cars available");
             }
             else
             {
@@ -103,19 +103,36 @@ namespace Autosalon
 
                 for (int i = 0; i < Cars.Count; i++)
                 {
-                    Console.WriteLine(Cars[i]);
+                    if (Cars[i].Arended)
+                    {
+                        Log.NotAvailable(Cars[i]);
+                    }
+                    else
+                    {
+                        Log.CarInfo(Cars[i]);
+                    }
+                    
                 }
 
             }
             Console.WriteLine();
         }
 
-        public void SortByIncreasingPrice()
+        public void SortByPrice(bool inc)
         {
-            List<Car> sCars = Cars.OrderBy(x => x.Price).ToList();
+            List<Car> sCars;
+            if (inc)
+            {
+                sCars = Cars.OrderBy(x => x.Price).ToList();
+            }
+            else
+            {
+                sCars = Cars.OrderByDescending(x => x.Price).ToList();
+            }
+
             if (sCars.Count == 0)
             {
-                Warning("There are no cars available");
+                Log.Warning("There are no cars available");
             }
             else
             {
@@ -123,19 +140,35 @@ namespace Autosalon
 
                 for (int i = 0; i < sCars.Count; i++)
                 {
-                    Console.WriteLine(sCars[i]);
+                    if (sCars[i].Arended)
+                    {
+                        Log.NotAvailable(sCars[i]);
+                    }
+                    else
+                    {
+                        Log.CarInfo(sCars[i]);
+                    }
                 }
 
             }
             Console.WriteLine();
         }
 
-        public void SortByDescendingPrice()
+        public void SortByYear(bool inc)
         {
-            List<Car> sCars = Cars.OrderByDescending(x => x.Price).ToList();
+            List<Car> sCars;
+            if (inc)
+            {
+               sCars = Cars.OrderBy(x => x.CreationYear).ToList();
+            }
+            else
+            {
+               sCars = Cars.OrderByDescending(x => x.CreationYear).ToList();
+            }
+            
             if (sCars.Count == 0)
             {
-                Warning("There are no cars available");
+                Log.Warning("There are no cars available");
             }
             else
             {
@@ -143,47 +176,14 @@ namespace Autosalon
 
                 for (int i = 0; i < sCars.Count; i++)
                 {
-                    Console.WriteLine(sCars[i]);
-                }
-
-            }
-            Console.WriteLine();
-        }
-
-        public void SortByDescendingYear()
-        {
-            List<Car> sCars = Cars.OrderByDescending(x => x.CreationYear).ToList();
-            if (sCars.Count == 0)
-            {
-                Warning("There are no cars available");
-            }
-            else
-            {
-                Console.WriteLine("Available cars: ");
-
-                for (int i = 0; i < sCars.Count; i++)
-                {
-                    Console.WriteLine(sCars[i]);
-                }
-
-            }
-            Console.WriteLine();
-        }
-
-        public void SortByIncreasingYear()
-        {
-            List<Car> sCars = Cars.OrderBy(x => x.CreationYear).ToList();
-            if (sCars.Count == 0)
-            {
-                Warning("There are no cars available");
-            }
-            else
-            {
-                Console.WriteLine("Available cars: ");
-
-                for (int i = 0; i < sCars.Count; i++)
-                {
-                    Console.WriteLine(sCars[i]);
+                    if (sCars[i].Arended)
+                    {
+                        Log.NotAvailable(sCars[i]);
+                    }
+                    else
+                    {
+                        Log.CarInfo(sCars[i]);
+                    }
                 }
 
             }
@@ -203,20 +203,20 @@ namespace Autosalon
                         customer.Money -= Cars[i].ArendPrice;
                         customer.AddArendedCar(Cars[i]);
                         found = true;
-                        Warning("Car arended");
+                        Log.Success("Car arended");
                         break;
                     }
                     else
                     {
                         found = true;
-                        Warning("Not enough money to arend a car");
+                        Log.Warning("Not enough money to arend a car");
                         break;
                     }
                 }
             }
             if (!found)
             {
-                Warning("Car isn't available");
+                Log.Warning("Car isn't available");
             }
             Console.WriteLine();
         }
@@ -231,13 +231,13 @@ namespace Autosalon
                     Cars.Find(item => item.Id == id).Arended = false;
                     found = true;
                     customer.ArendedCars.Remove(customer.ArendedCars[i]);
-                    Warning("Car returned");
+                    Log.Success("Car returned");
                     break;
                 }
             }
             if (!found)
             {
-                Warning("Car isn't found");
+                Log.Warning("Car isn't found");
             }
             Console.WriteLine();
         }
@@ -252,15 +252,11 @@ namespace Autosalon
                     {
                         if (customer.Money < Cars[i].DiscountPrice)
                         {
-                            Console.WriteLine("---------------------------------------------");
-                            Console.WriteLine("Not enough money");
-                            Console.WriteLine("---------------------------------------------");
+                            Log.Warning("Not enough money");
                         }
                         else
                         {
-                            Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine("Car bought");
-                            Console.WriteLine("|---------------------------------------------");
+                            Log.Success("Car bought");
                             customer.Money -= Cars[i].DiscountPrice;
                             Cars.Remove(Cars[i]);
                         }
@@ -269,15 +265,11 @@ namespace Autosalon
                     {
                         if (customer.Money < Cars[i].Price)
                         {
-                            Console.WriteLine("---------------------------------------------");
-                            Console.WriteLine("Not enough money");
-                            Console.WriteLine("---------------------------------------------");
+                            Log.Warning("Not enough money");
                         }
                         else
                         {
-                            Console.WriteLine("|---------------------------------------------");
-                            Console.WriteLine("Car bought");
-                            Console.WriteLine("|---------------------------------------------");
+                            Log.Success("Car bought");
                             customer.Money -= Cars[i].Price;
                             Cars.Remove(Cars[i]);
                         }
@@ -292,13 +284,20 @@ namespace Autosalon
             List<Car> CarsWithYear = Cars.FindAll(x => x.CreationYear == year);
             if (CarsWithYear.Count == 0)
             {
-                Console.WriteLine("There are no cars available in " + year + " year");
+                Log.Warning("There are no cars available in " + year + " year");
             }
             else
             {
                 for (int i = 0; i < CarsWithYear.Count; i++)
                 {
-                    Console.WriteLine(CarsWithYear[i]);
+                    if (CarsWithYear[i].Arended)
+                    {
+                        Log.NotAvailable(CarsWithYear[i]);
+                    }
+                    else
+                    {
+                        Log.CarInfo(CarsWithYear[i]);
+                    }
                 }
             }
             Console.WriteLine();
@@ -311,17 +310,23 @@ namespace Autosalon
             List<Car> CarsWithYear = Cars.FindAll(x => x.CreationYear <= max && x.CreationYear >= min);
             if (CarsWithYear.Count == 0)
             {
-                Console.WriteLine("|---------------------------------------------");
-                Console.WriteLine("There are no cars available between " + min + " and " + max + " years");
-                Console.WriteLine("|---------------------------------------------");
+                Log.Warning("There are no cars available between " + min + " and " + max + " years");
             }
             else
             {
                 Console.WriteLine("Cars between " + min + " and " + max + " years:");
                 for (int i = 0; i < CarsWithYear.Count; i++)
                 {
-                    Console.WriteLine(CarsWithYear[i]);
+                    if (CarsWithYear[i].Arended)
+                    {
+                        Log.NotAvailable(CarsWithYear[i]);
+                    }
+                    else
+                    {
+                        Log.CarInfo(CarsWithYear[i]);
+                    }
                 }
+            
             }
             Console.WriteLine();
         }
@@ -334,15 +339,20 @@ namespace Autosalon
             Console.WriteLine("Cars with price range " + minPrice + " - " + maxPrice + ": ");
             if (CarsWithPrice.Count == 0)
             {
-                Console.WriteLine("|---------------------------------------------");
-                Console.WriteLine("There are no cars available in range " + minPrice + " and " + maxPrice + " dollars");
-                Console.WriteLine("|---------------------------------------------");
+                Log.Warning("There are no cars available in range " + minPrice + " and " + maxPrice + " dollars");
             }
             else
             {
                 for (int i = 0; i < CarsWithPrice.Count; i++)
                 {
-                    Console.WriteLine(CarsWithPrice[i]);
+                    if (CarsWithPrice[i].Arended)
+                    {
+                        Log.NotAvailable(CarsWithPrice[i]);
+                    }
+                    else
+                    {
+                        Log.CarInfo(CarsWithPrice[i]);
+                    }
                 }
             }
             Console.WriteLine();
@@ -405,13 +415,6 @@ namespace Autosalon
             }
         }
 
-        private void Warning(string text)
-        {
-            Console.WriteLine("|---------------------------------------------");
-            Console.WriteLine($"{text}");
-            Console.WriteLine("|---------------------------------------------");
-        }
-
         public void RegisterCustomer()
         {
             Console.WriteLine("Please enter your username: ");
@@ -426,13 +429,13 @@ namespace Autosalon
             {
                 if(Customers[i].Username == username)
                 {
-                    Warning("Customer already exists");
+                    Log.Warning("Customer already exists");
                     return;
                 }
             }
             if (password == passwordRepeat)
             {
-                Warning("Registration successfull\nPlease Login");
+                Log.Success("Registration successfull\nPlease Login");
                 AddCustomer(new Customer(username, money, password));
             }
             else
