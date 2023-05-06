@@ -14,6 +14,8 @@ namespace Autosalon
 
         public List<Customer> Customers { get; private set; }
 
+        public List<Car> BoughtCars { get; private set; }
+
         public Salon()
         {
             if (!File.Exists("data.json"))
@@ -42,6 +44,20 @@ namespace Autosalon
                 if(Customers == null)
                 {
                     Customers = new List<Customer> { };
+                }
+            }
+            if (!File.Exists("Checks.json"))
+            {
+                File.Create("Checks.json").Close();
+                BoughtCars = new List<Car> { };
+            }
+            else
+            {
+                string json = File.ReadAllText("Checks.json");
+                BoughtCars = JsonConvert.DeserializeObject<List<Car>>(json);
+                if (BoughtCars == null)
+                {
+                    BoughtCars = new List<Car> { };
                 }
             }
         }
@@ -423,9 +439,9 @@ namespace Autosalon
 
         public void SaveData()
         {
-            string json = JsonConvert.SerializeObject(Cars);
+            string json = JsonConvert.SerializeObject(Cars, Formatting.Indented);
             File.WriteAllText("data.json", json);
-            string customers = JsonConvert.SerializeObject(Customers);
+            string customers = JsonConvert.SerializeObject(Customers, Formatting.Indented);
             File.WriteAllText("customers.json", customers);
         }
 
@@ -456,6 +472,46 @@ namespace Autosalon
             {
                 Console.WriteLine("Passwords don't match");
             }
+        }
+
+        public void AddBalanceToCustomer()
+        {
+            Console.Write("Please enter customer's name: ");
+            string name = Validator.StringValidation();
+            int index = Customers.FindIndex(x => x.Username == name);
+            if (index >= 0)
+            {
+                Console.Write("Please enter money amount: ");
+                double money = Validator.DoubleValidation();
+                Customers[index].AddBalance(money);
+            }
+            else
+            {
+                Log.Warning("Customer does not exists");
+            }
+
+        }
+
+        public void ChangeCarInfo()
+        {
+            Console.Write("Write car's id that you want to change: ");
+            string id = Validator.StringValidation();
+            for (int i = 0; i < Cars.Count; i++)
+            {
+                if (Cars[i].Id == id && !Cars[i].Arended)
+                {
+
+                    Cars[i].ChangeInfo();
+                    return;
+                }
+                else if(Cars[i].Id == id && Cars[i].Arended)
+                {
+                    Log.Warning("Car arended can't change info");
+                    return;
+                }
+            }
+            Log.Warning("Car not found");
+            Console.WriteLine();
         }
 
         private string GenerateCarID()
@@ -490,6 +546,12 @@ namespace Autosalon
                 }
             }
         }       
+
+        private void CreateCheck()
+        {
+           
+        }
+
 
     }
 }

@@ -1,1 +1,23 @@
-[{"Username":"R","Money":1000.0,"Password":"123","ArendedCars":[]},{"Username":"new","Money":0.0,"Password":"123","ArendedCars":[]}]
+[
+  {
+    "Username": "R",
+    "Money": 1000.0,
+    "Password": "123",
+    "IsAdmin": true,
+    "ArendedCars": []
+  },
+  {
+    "Username": "new",
+    "Money": 1000.0,
+    "Password": "123",
+    "IsAdmin": false,
+    "ArendedCars": []
+  },
+  {
+    "Username": "RRRRR",
+    "Money": 1000.0,
+    "Password": "123",
+    "IsAdmin": false,
+    "ArendedCars": []
+  }
+]

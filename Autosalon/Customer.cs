@@ -11,6 +11,7 @@ namespace Autosalon
         public string Username { get; set; }
         public double Money { get; set; }
         public string Password { get; set; }
+        public bool IsAdmin { get; set; }
         public List<Car> ArendedCars { get; set; }
 
 
@@ -20,6 +21,7 @@ namespace Autosalon
             Money = money;
             Password = password;
             ArendedCars = new List<Car> { };
+            IsAdmin = false;
         }
 
         public void AddArendedCar(Car car)
@@ -52,6 +54,11 @@ namespace Autosalon
             Console.WriteLine("Balance: " + Money);
             Console.WriteLine("|---------------------------------------------");
             Console.WriteLine();
+        }
+
+        public void AddBalance(double money)
+        {
+            Money += money;
         }
 
     }
