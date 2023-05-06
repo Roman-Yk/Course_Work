@@ -17,11 +17,6 @@ namespace Autosalon
         public double ArendPrice { get; set; }
         public string Id { get; set; }
 
-        public Car()
-        {
-
-        }
-
         public Car(string id, int year, double price, string name, double discount, double arendPrice, string mark)
         {
             this.CreationYear = year;

@@ -13,7 +13,6 @@ namespace Autosalon
         public string Password { get; set; }
         public List<Car> ArendedCars { get; set; }
 
-        public Customer() { }
 
         public Customer(string name, double money, string password)
         {

@@ -16,6 +16,7 @@ namespace Autosalon
             bool Logged = false;
             Customer ActiveCustomer = null;
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ConsoleExit);
+
             while (true)
             {
                
@@ -78,26 +79,33 @@ namespace Autosalon
                         case "1":
                             salon.GetAvailableCars();
                             break;
+
                         case "2":
                             salon.GetAllCars();
                             break;
+
                         case "3":
                             salon.SortByPrice(true);
                             break;
+
                         case "4":
                             salon.SortByPrice(false);
                             break;
+
                         case "5":
                             salon.SortByYear(true);
                             break;
+
                         case "6":
                             salon.SortByYear(false);
                             break;
+
                         case "7":
                             Console.WriteLine("Please enter the year of creation");
                             int year = Validator.IntValidation();
                             salon.GetCarsByYear(year);
                             break;
+
                         case "8":
                             Console.Write("Please enter the min year of creation: ");
                             int min_year = Validator.IntValidation();
@@ -105,13 +113,15 @@ namespace Autosalon
                             int max_year = Validator.IntValidation();
                             salon.GetCarsByYearRange(min_year, max_year);
                             break;
+
                         case "9":
                             Console.Write("Please enter the min price: ");
-                            int min_price = Validator.IntValidation();
+                            double min_price = Validator.DoubleValidation();
                             Console.Write("Please enter the max price (111,5): ");
-                            int max_price = Validator.IntValidation();
+                            double max_price = Validator.DoubleValidation();
                             salon.GetCarsByPriceRange(min_price, max_price);
                             break;
+
                         case "10":
                             {
                                 Console.Write("Please enter car id: ");
@@ -119,6 +129,7 @@ namespace Autosalon
                                 salon.ArendCar(id, ActiveCustomer);
                             }
                             break;
+
                         case "11":
                             {
                                 Console.Write("Please enter car id: ");
@@ -126,45 +137,9 @@ namespace Autosalon
                                 salon.ReturnCar(id, ActiveCustomer);
                             }
                             break;
+
                         case "12":
-                            Console.Write("Please enter car creation year: ");
-                            int creation_year = Validator.IntValidation();
-                            Console.Write("Please enter car price (111,5): ");
-                            double price = Validator.DoubleValidation();
-                            Console.Write("Please enter car name: ");
-                            string name = Validator.StringValidation();
-                            Console.Write("Please enter car mark: ");
-                            string mark = Validator.StringValidation();
-                            Console.Write("Please enter car arend price: ");
-                            double arendPrice = Validator.DoubleValidation();
-                            Console.Write("Please enter car with discount price if any discount present else write 0: ");
-                            double discountPrice = Convert.ToDouble(Console.ReadLine());
-                            if (discountPrice > price)
-                            {
-                                Log.Warning("Discount price can't be more that usual price");
-                                Console.WriteLine();
-                            }
-                            else if(arendPrice > price)
-                            {
-                                Log.Warning("Arend price can't be more that usual price");
-                                Console.WriteLine();
-                            }
-                            else if (creation_year < 1886)
-                            {
-                                Console.WriteLine();
-                                Log.Warning("The first car was created in 1886");
-                                Console.WriteLine();
-                            }
-                            else if (creation_year > 2023)
-                            {
-                                Console.WriteLine();
-                                Log.Warning("Are you from future?");
-                                Console.WriteLine();
-                            }
-                            else
-                            {
-                                salon.AddCar(creation_year, price, name, arendPrice, discountPrice, mark);
-                            }
+                            salon.AddCar();
                             break;
 
                         case "13":
@@ -198,6 +173,7 @@ namespace Autosalon
             }
 
             salon.SaveData();
+
             void ConsoleExit(object sender, EventArgs e)
             {
                 salon.SaveData();

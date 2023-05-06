@@ -46,7 +46,7 @@ namespace Autosalon
             }
         }
 
-        public void AddCar(int year, double price, string name, double arendPrice, double discountPrice, string mark)
+        private void _AddCar(int year, double price, string name, double arendPrice, double discountPrice, string mark)
         {
             if(price > 0 && arendPrice > 0)
             {
@@ -60,6 +60,48 @@ namespace Autosalon
 
             }
             Console.WriteLine();
+        }
+
+        public void AddCar()
+        {
+            Console.Write("Please enter car creation year: ");
+            int creation_year = Validator.IntValidation();
+            Console.Write("Please enter car price: ");
+            double price = Validator.DoubleValidation();
+            Console.Write("Please enter car name: ");
+            string name = Validator.StringValidation();
+            Console.Write("Please enter car mark: ");
+            string mark = Validator.StringValidation();
+            Console.Write("Please enter car arend price: ");
+            double arendPrice = Validator.DoubleValidation();
+            Console.Write("Please enter car with discount price if any discount present else write 0: ");
+            double discountPrice = Convert.ToDouble(Console.ReadLine());
+            if (discountPrice > price)
+            {
+                Log.Warning("Discount price can't be more that usual price");
+                Console.WriteLine();
+            }
+            else if (arendPrice > price)
+            {
+                Log.Warning("Arend price can't be more that usual price");
+                Console.WriteLine();
+            }
+            else if (creation_year < 1886)
+            {
+                Console.WriteLine();
+                Log.Warning("The first car was created in 1886");
+                Console.WriteLine();
+            }
+            else if (creation_year > 2023)
+            {
+                Console.WriteLine();
+                Log.Warning("Are you from future?");
+                Console.WriteLine();
+            }
+            else
+            {
+                _AddCar(creation_year, price, name, arendPrice, discountPrice, mark);
+            }
         }
 
         public void GetAvailableCars()
@@ -216,7 +258,7 @@ namespace Autosalon
             }
             if (!found)
             {
-                Log.Warning("Car isn't available");
+                Log.Warning("Car not found");
             }
             Console.WriteLine();
         }
@@ -253,12 +295,14 @@ namespace Autosalon
                         if (customer.Money < Cars[i].DiscountPrice)
                         {
                             Log.Warning("Not enough money");
+                            return;
                         }
                         else
                         {
                             Log.Success("Car bought");
                             customer.Money -= Cars[i].DiscountPrice;
                             Cars.Remove(Cars[i]);
+                            return;
                         }
                     }
                     else
@@ -266,16 +310,19 @@ namespace Autosalon
                         if (customer.Money < Cars[i].Price)
                         {
                             Log.Warning("Not enough money");
+                            return;
                         }
                         else
                         {
                             Log.Success("Car bought");
                             customer.Money -= Cars[i].Price;
                             Cars.Remove(Cars[i]);
+                            return;
                         }
                     }
                 }
             }
+            Log.Warning("Car not found");
             Console.WriteLine();
         }
 
@@ -331,10 +378,10 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void GetCarsByPriceRange(int min, int max)
+        public void GetCarsByPriceRange(double min, double max)
         {
-            int minPrice = min > max ? max : min;
-            int maxPrice = min > max ? min : max;
+            double minPrice = min > max ? max : min;
+            double maxPrice = min > max ? min : max;
             List<Car> CarsWithPrice = Cars.FindAll(x => x.Price <= maxPrice && x.Price >= minPrice);
             Console.WriteLine("Cars with price range " + minPrice + " - " + maxPrice + ": ");
             if (CarsWithPrice.Count == 0)
@@ -381,7 +428,36 @@ namespace Autosalon
             string customers = JsonConvert.SerializeObject(Customers);
             File.WriteAllText("customers.json", customers);
         }
-        
+
+        public void RegisterCustomer()
+        {
+            Console.WriteLine("Please enter your username: ");
+            string username = Validator.StringValidation();
+            Console.WriteLine("Please enter your password: ");
+            string password = Validator.StringValidation();
+            Console.WriteLine("Please repeat your password: ");
+            string passwordRepeat = Validator.StringValidation();
+            Console.WriteLine("Please enter your money amount (1000,2): ");
+            double money = Validator.DoubleValidation();
+            for (int i = 0; i < Customers.Count; i++)
+            {
+                if (Customers[i].Username == username)
+                {
+                    Log.Warning("Customer already exists");
+                    return;
+                }
+            }
+            if (password == passwordRepeat)
+            {
+                Log.Success("Registration successfull\nPlease Login");
+                AddCustomer(new Customer(username, money, password));
+            }
+            else
+            {
+                Console.WriteLine("Passwords don't match");
+            }
+        }
+
         private string GenerateCarID()
         {
             Random random = new Random();
@@ -413,36 +489,7 @@ namespace Autosalon
                     return id;
                 }
             }
-        }
-
-        public void RegisterCustomer()
-        {
-            Console.WriteLine("Please enter your username: ");
-            string username = Validator.StringValidation();
-            Console.WriteLine("Please enter your password: ");
-            string password = Validator.StringValidation();
-            Console.WriteLine("Please repeat your password: ");
-            string passwordRepeat = Validator.StringValidation();
-            Console.WriteLine("Please enter your money amount (1000,2): ");
-            double money = Validator.DoubleValidation();
-            for(int i = 0; i< Customers.Count; i++)
-            {
-                if(Customers[i].Username == username)
-                {
-                    Log.Warning("Customer already exists");
-                    return;
-                }
-            }
-            if (password == passwordRepeat)
-            {
-                Log.Success("Registration successfull\nPlease Login");
-                AddCustomer(new Customer(username, money, password));
-            }
-            else
-            {
-                Console.WriteLine("Passwords don't match");
-            }
-        }
+        }       
 
     }
 }

@@ -13,27 +13,28 @@ namespace Autosalon
             string? str = Console.ReadLine();
             while (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
             {
-                Console.WriteLine("The field can't be empty!\nTry again:");
+                Console.WriteLine("The field can't be empty: ");
                 str = Console.ReadLine();
             }
-            return str.ToUpper();
+            return str;
         }
 
         public static double DoubleValidation()
         {
             double num;
-            while (!double.TryParse(Console.ReadLine(), out num))
+            while (!double.TryParse(Console.ReadLine(), out num) || num < 0)
             {
-                Console.Write("Write a double: ");
+                Console.Write("Write a positive number: ");
             }
             return num;
         }
+
         public static int IntValidation()
         {
             int num;
-            while (!int.TryParse(Console.ReadLine(), out num))
+            while (!int.TryParse(Console.ReadLine(), out num) || num < 0)
             {
-                Console.Write("Write a number: ");
+                Console.Write("Write a positive number: ");
             }
             return num;
         }
