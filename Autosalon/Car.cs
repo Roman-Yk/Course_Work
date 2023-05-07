@@ -16,6 +16,9 @@ namespace Autosalon
         public bool Arended { get; set; }
         public double ArendPrice { get; set; }
         public string Id { get; set; }
+        public DateTime? boughtDate { get; set; }
+        public DateTime? StartArendDate { get; set; }
+        public DateTime? EndArendDate { get; set; }
 
         public Car(string id, int year, double price, string name, double discount, double arendPrice, string mark)
         {
@@ -26,6 +29,8 @@ namespace Autosalon
             ArendPrice = arendPrice;
             CarMark = mark;
             Id = id;
+            boughtDate = null;
+            StartArendDate = null;
         }
 
         public void ChangeInfo()
@@ -42,6 +47,7 @@ namespace Autosalon
             double arendPrice = Validator.DoubleValidation();
             Console.Write("Write car's discount price price if there no discount write 0: ");
             double discountPrice = Validator.DoubleValidation();
+
             if (discountPrice > price)
             {
                 Log.Warning("Discount price can't be more that usual price");
@@ -75,15 +81,23 @@ namespace Autosalon
             }  
         }
 
+        public void ArendCar(int days) 
+        {
+            Arended = true;
+            StartArendDate = DateTime.Now;
+            EndArendDate = StartArendDate.Value.AddDays(days);
+        }
+
         public override string ToString()
         {
             return $"|Id: { Id }\n" +
             $"|Name: { CarName }\n" +
-            $"|Mark: { CarMark}\n" +
-            $"|Creation Year: { CreationYear}\n" +
-            $"|Price: {Price}\n" +
+            $"|Mark: { CarMark }\n" +
+            $"|Creation Year: { CreationYear }\n" +
+            $"|Price: {Price }\n" +
             $"|Price with discount: {(DiscountPrice == 0 ? "No discount" : DiscountPrice)}\n" +
-            $"|Arend Price: { ArendPrice}" ;
+            $"{(boughtDate == null ? "" : "|Bought date:" + boughtDate + "\n")}"+
+            $"|Arend Price: { ArendPrice }" ;
         }
 
     }

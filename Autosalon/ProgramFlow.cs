@@ -84,10 +84,11 @@ namespace Autosalon
             Console.WriteLine("10) Change car info");
             Console.WriteLine("11) Return car");
             Console.WriteLine("12) Add car");
-            Console.WriteLine("13) Buy car"); // remove car
+            Console.WriteLine("13) Remove car"); 
             Console.WriteLine("14) Get all customers");
             Console.WriteLine("15) Get my arended cars"); // get all arended cars from different customers
             Console.WriteLine("16) Add money to customer");
+            Console.WriteLine("17) Get all bought cars");
             Console.WriteLine("Write 'exit' to quit");
 
             string user_input = Console.ReadLine();
@@ -118,39 +119,23 @@ namespace Autosalon
                     break;
 
                 case "7":
-                    Console.WriteLine("Please enter the year of creation");
-                    int year = Validator.IntValidation();
-                    salon.GetCarsByYear(year);
+                    salon.GetCarsByYear();
                     break;
 
                 case "8":
-                    Console.Write("Please enter the min year of creation: ");
-                    int min_year = Validator.IntValidation();
-                    Console.Write("Please enter the max year of creation: ");
-                    int max_year = Validator.IntValidation();
-                    salon.GetCarsByYearRange(min_year, max_year);
+                    salon.GetCarsByYearRange();
                     break;
 
                 case "9":
-                    Console.Write("Please enter the min price: ");
-                    double min_price = Validator.DoubleValidation();
-                    Console.Write("Please enter the max price (111,5): ");
-                    double max_price = Validator.DoubleValidation();
-                    salon.GetCarsByPriceRange(min_price, max_price);
+                    salon.GetCarsByPriceRange();
                     break;
 
                 case "10":
-                    {
-                        salon.ChangeCarInfo();
-                    }
+                    salon.ChangeCarInfo();
                     break;
 
                 case "11":
-                    {
-                        Console.Write("Please enter car id: ");
-                        string id = Validator.StringValidation();
-                        salon.ReturnCar(id, ActiveCustomer);
-                    }
+                    salon.ReturnCar(ActiveCustomer);
                     break;
 
                 case "12":
@@ -158,12 +143,8 @@ namespace Autosalon
                     break;
 
                 case "13":
-                    {
-                        Console.Write("Please enter car id: ");
-                        string id = Validator.StringValidation();
-                        salon.BuyCar(id, ActiveCustomer);
-                        break;
-                    }
+                    salon.RemoveCar();
+                    break;
 
                 case "14":
                     salon.GetAllCustomers();
@@ -175,6 +156,10 @@ namespace Autosalon
 
                 case "16":
                     salon.AddBalanceToCustomer();
+                    break;
+
+                case "17":
+                    salon.GetBoughtCars();
                     break;
 
                 case "exit":
@@ -234,41 +219,23 @@ namespace Autosalon
                     break;
 
                 case "7":
-                    Console.WriteLine("Please enter the year of creation");
-                    int year = Validator.IntValidation();
-                    salon.GetCarsByYear(year);
+                    salon.GetCarsByYear();
                     break;
 
                 case "8":
-                    Console.Write("Please enter the min year of creation: ");
-                    int min_year = Validator.IntValidation();
-                    Console.Write("Please enter the max year of creation: ");
-                    int max_year = Validator.IntValidation();
-                    salon.GetCarsByYearRange(min_year, max_year);
+                    salon.GetCarsByYearRange();
                     break;
 
                 case "9":
-                    Console.Write("Please enter the min price: ");
-                    double min_price = Validator.DoubleValidation();
-                    Console.Write("Please enter the max price (111,5): ");
-                    double max_price = Validator.DoubleValidation();
-                    salon.GetCarsByPriceRange(min_price, max_price);
+                    salon.GetCarsByPriceRange();
                     break;
 
                 case "10":
-                    {
-                        Console.Write("Please enter car id: ");
-                        string id = Validator.StringValidation();
-                        salon.ArendCar(id, ActiveCustomer);
-                    }
+                    salon.ArendCar(ActiveCustomer);
                     break;
 
                 case "11":
-                    {
-                        Console.Write("Please enter car id: ");
-                        string id = Validator.StringValidation();
-                        salon.ReturnCar(id, ActiveCustomer);
-                    }
+                    salon.ReturnCar(ActiveCustomer);
                     break;
 
                 case "12":

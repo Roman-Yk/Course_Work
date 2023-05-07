@@ -1,14 +1,14 @@
 [
   {
     "Username": "R",
-    "Money": 1000.0,
+    "Money": 7100.0,
     "Password": "123",
     "IsAdmin": true,
     "ArendedCars": []
   },
   {
     "Username": "new",
-    "Money": 1000.0,
+    "Money": 950.0,
     "Password": "123",
     "IsAdmin": false,
     "ArendedCars": []

@@ -14,7 +14,7 @@ namespace Autosalon
 
         public List<Customer> Customers { get; private set; }
 
-        public List<Car> BoughtCars { get; private set; }
+        public Dictionary<string, List<Car>> BoughtCars { get; private set; }
 
         public Salon()
         {
@@ -49,15 +49,33 @@ namespace Autosalon
             if (!File.Exists("Checks.json"))
             {
                 File.Create("Checks.json").Close();
-                BoughtCars = new List<Car> { };
+                BoughtCars = new Dictionary<string, List<Car>> { };
             }
             else
             {
                 string json = File.ReadAllText("Checks.json");
-                BoughtCars = JsonConvert.DeserializeObject<List<Car>>(json);
+                BoughtCars = JsonConvert.DeserializeObject<Dictionary<string, List<Car>>>(json);
                 if (BoughtCars == null)
                 {
-                    BoughtCars = new List<Car> { };
+                    BoughtCars = new Dictionary<string, List<Car>> { };
+                }
+            }
+
+            for (int i = 0; i < Cars.Count; i++)
+            {
+                if (Cars[i].Arended && Cars[i].EndArendDate <= DateTime.Now)
+                {
+                    Cars[i].Arended = false;
+                }
+            }
+            for (int i = 0; i < Customers.Count; i++)
+            {
+                for (int j = 0; j < Customers[i].ArendedCars.Count; j++)
+                {
+                    if (Customers[i].ArendedCars[j].EndArendDate <= DateTime.Now)
+                    {
+                        Customers[i].ArendedCars.Remove(Customers[i].ArendedCars[j]);
+                    }
                 }
             }
         }
@@ -88,10 +106,10 @@ namespace Autosalon
             string name = Validator.StringValidation();
             Console.Write("Please enter car mark: ");
             string mark = Validator.StringValidation();
-            Console.Write("Please enter car arend price: ");
+            Console.Write("Please enter car arend price per day: ");
             double arendPrice = Validator.DoubleValidation();
             Console.Write("Please enter car with discount price if any discount present else write 0: ");
-            double discountPrice = Convert.ToDouble(Console.ReadLine());
+            double discountPrice = Validator.DoubleValidation();
             if (discountPrice > price)
             {
                 Log.Warning("Discount price can't be more that usual price");
@@ -248,17 +266,21 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void ArendCar(string id, Customer customer)
+        public void ArendCar(Customer customer)
         {
+            Console.Write("Please enter car id: ");
+            string id = Validator.StringValidation();
+            Console.Write("Please amount of days you want arend a car: ");
+            int days = Validator.IntValidation();
             bool found = false;
             for (int i = 0; i < Cars.Count; i++)
             {
                 if (Cars[i].Id == id &&!Cars[i].Arended)
                 {
-                    if(customer.Money >= Cars[i].ArendPrice)
+                    if(customer.Money >= Cars[i].ArendPrice * days)
                     {
-                        Cars[i].Arended = true;
-                        customer.Money -= Cars[i].ArendPrice;
+                        customer.Money -= Cars[i].ArendPrice * days;
+                        Cars[i].ArendCar(days);
                         customer.AddArendedCar(Cars[i]);
                         found = true;
                         Log.Success("Car arended");
@@ -279,18 +301,24 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void ReturnCar(string id, Customer customer)
+        public void ReturnCar(Customer customer)
         {
+            Console.Write("Please enter car id: ");
+            string id = Validator.StringValidation();
             bool found = false;
+            DateTime time = DateTime.Now;
             for (int i = 0; i < customer.ArendedCars.Count; i++)
             {
                 if (customer.ArendedCars[i].Id == id && customer.ArendedCars[i].Arended)
                 {
-                    Cars.Find(item => item.Id == id).Arended = false;
-                    found = true;
-                    customer.ArendedCars.Remove(customer.ArendedCars[i]);
-                    Log.Success("Car returned");
-                    break;
+                    if(customer.ArendedCars[i].EndArendDate > time)
+                    {
+                        Cars.Find(item => item.Id == id).Arended = false;
+                        found = true;
+                        customer.ArendedCars.Remove(customer.ArendedCars[i]);
+                        Log.Success("Car returned");
+                        break;
+                    }
                 }
             }
             if (!found)
@@ -315,9 +343,10 @@ namespace Autosalon
                         }
                         else
                         {
-                            Log.Success("Car bought");
                             customer.Money -= Cars[i].DiscountPrice;
+                            CreateCheck(customer, Cars[i]);
                             Cars.Remove(Cars[i]);
+                            Log.Success("Car bought");
                             return;
                         }
                     }
@@ -330,9 +359,10 @@ namespace Autosalon
                         }
                         else
                         {
-                            Log.Success("Car bought");
                             customer.Money -= Cars[i].Price;
+                            CreateCheck(customer, Cars[i]);
                             Cars.Remove(Cars[i]);
+                            Log.Success("Car bought");
                             return;
                         }
                     }
@@ -342,9 +372,12 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void GetCarsByYear(int year)
+        public void GetCarsByYear()
         {
+            Console.WriteLine("Please enter the year of creation");
+            int year = Validator.IntValidation();
             List<Car> CarsWithYear = Cars.FindAll(x => x.CreationYear == year);
+
             if (CarsWithYear.Count == 0)
             {
                 Log.Warning("There are no cars available in " + year + " year");
@@ -366,11 +399,17 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void GetCarsByYearRange(int minYear, int maxYear)
+        public void GetCarsByYearRange()
         {
-            int min = minYear > maxYear ? maxYear : minYear;
-            int max = minYear > maxYear ? minYear : maxYear;
+            Console.Write("Please enter the min year of creation: ");
+            int min_year = Validator.IntValidation();
+            Console.Write("Please enter the max year of creation: ");
+            int max_year = Validator.IntValidation();
+
+            int min = min_year > max_year ? max_year : min_year;
+            int max = min_year > max_year ? min_year : max_year;
             List<Car> CarsWithYear = Cars.FindAll(x => x.CreationYear <= max && x.CreationYear >= min);
+
             if (CarsWithYear.Count == 0)
             {
                 Log.Warning("There are no cars available between " + min + " and " + max + " years");
@@ -394,12 +433,18 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void GetCarsByPriceRange(double min, double max)
+        public void GetCarsByPriceRange()
         {
-            double minPrice = min > max ? max : min;
-            double maxPrice = min > max ? min : max;
+            Console.Write("Please enter the min price: ");
+            double min_price = Validator.DoubleValidation();
+            Console.Write("Please enter the max price (111,5): ");
+            double max_price = Validator.DoubleValidation();
+
+            double minPrice = min_price > max_price ? max_price : min_price;
+            double maxPrice = min_price > max_price ? min_price : max_price;
             List<Car> CarsWithPrice = Cars.FindAll(x => x.Price <= maxPrice && x.Price >= minPrice);
             Console.WriteLine("Cars with price range " + minPrice + " - " + maxPrice + ": ");
+
             if (CarsWithPrice.Count == 0)
             {
                 Log.Warning("There are no cars available in range " + minPrice + " and " + maxPrice + " dollars");
@@ -443,6 +488,8 @@ namespace Autosalon
             File.WriteAllText("data.json", json);
             string customers = JsonConvert.SerializeObject(Customers, Formatting.Indented);
             File.WriteAllText("customers.json", customers);
+            string checks = JsonConvert.SerializeObject(BoughtCars, Formatting.Indented);
+            File.WriteAllText("Checks.json", checks);
         }
 
         public void RegisterCustomer()
@@ -496,6 +543,7 @@ namespace Autosalon
         {
             Console.Write("Write car's id that you want to change: ");
             string id = Validator.StringValidation();
+
             for (int i = 0; i < Cars.Count; i++)
             {
                 if (Cars[i].Id == id && !Cars[i].Arended)
@@ -510,6 +558,39 @@ namespace Autosalon
                     return;
                 }
             }
+
+            Log.Warning("Car not found");
+            Console.WriteLine();
+        }
+
+        public void GetBoughtCars()
+        {
+            foreach (KeyValuePair<string, List<Car>> entry in BoughtCars)
+            { 
+                foreach(Car car in entry.Value)
+                {
+                    Log.Warning($"|Customer: {entry.Key}\n{car}");
+                }
+            }
+        }
+
+        public void RemoveCar()
+        {
+            Console.Write("Please enter car id: ");
+            string id = Validator.StringValidation();
+
+            for (int i = 0; i < Cars.Count; i++)
+            {
+                if (Cars[i].Id == id && !Cars[i].Arended)
+                {
+                    Cars.Remove(Cars[i]);
+                }
+                else if (Cars[i].Id == id && Cars[i].Arended)
+                {
+                    Log.Warning("Can't delete car, car arended");
+                }
+            }
+
             Log.Warning("Car not found");
             Console.WriteLine();
         }
@@ -547,11 +628,19 @@ namespace Autosalon
             }
         }       
 
-        private void CreateCheck()
+        private void CreateCheck(Customer customer, Car car)
         {
-           
+            car.boughtDate = DateTime.Today;
+            if (BoughtCars.ContainsKey(customer.Username))
+            {
+                BoughtCars[customer.Username].Add(car);
+            }
+            else
+            {
+                BoughtCars.Add(customer.Username, new List<Car> { car });
+            }
+            
         }
-
 
     }
 }
