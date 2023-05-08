@@ -1,1 +1,41 @@
-[{"CreationYear":1999,"Price":200.0,"CarName":"T","CarMark":"O","DiscountPrice":0.0,"Arended":false,"ArendPrice":20.0,"Id":"AH-49937"},{"CreationYear":1899,"Price":879.0,"CarName":"R","CarMark":"P","DiscountPrice":800.0,"Arended":false,"ArendPrice":40.0,"Id":"OS-93085"},{"CreationYear":2010,"Price":2000.0,"CarName":"E","CarMark":"W","DiscountPrice":1800.0,"Arended":false,"ArendPrice":100.0,"Id":"CS-48081"},{"CreationYear":1999,"Price":100.0,"CarName":"T","CarMark":"R","DiscountPrice":0.0,"Arended":false,"ArendPrice":1.0,"Id":"LJ-40598"}]
+[
+  {
+    "CreationYear": 1999,
+    "Price": 100.0,
+    "CarName": "sdf",
+    "CarMark": "hrt",
+    "DiscountPrice": 0.0,
+    "Arended": true,
+    "ArendPrice": 10.0,
+    "Id": "YQ-65480",
+    "boughtDate": null,
+    "StartArendDate": "2023-05-08T11:00:13.884635+03:00",
+    "EndArendDate": "2023-05-16T11:00:13.884635+03:00"
+  },
+  {
+    "CreationYear": 1999,
+    "Price": 100.0,
+    "CarName": "TTTT",
+    "CarMark": "pp",
+    "DiscountPrice": 0.0,
+    "Arended": false,
+    "ArendPrice": 10.0,
+    "Id": "LF-18319",
+    "boughtDate": null,
+    "StartArendDate": null,
+    "EndArendDate": null
+  },
+  {
+    "CreationYear": 1987,
+    "Price": 100.0,
+    "CarName": "Toyota",
+    "CarMark": "lalalal",
+    "DiscountPrice": 0.0,
+    "Arended": true,
+    "ArendPrice": 10.0,
+    "Id": "PB-30345",
+    "boughtDate": null,
+    "StartArendDate": "2023-05-08T18:07:57.506905+03:00",
+    "EndArendDate": "2023-05-18T18:07:57.506905+03:00"
+  }
+]

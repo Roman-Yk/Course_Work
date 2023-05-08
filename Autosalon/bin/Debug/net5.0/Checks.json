@@ -1,0 +1,45 @@
+{
+  "R": [
+    {
+      "CreationYear": 2010,
+      "Price": 2000.0,
+      "CarName": "E",
+      "CarMark": "W",
+      "DiscountPrice": 1800.0,
+      "Arended": false,
+      "ArendPrice": 100.0,
+      "Id": "CS-48081",
+      "boughtDate": "2023-05-06T00:00:00+03:00",
+      "StartArendDate": null,
+      "EndArendDate": null
+    },
+    {
+      "CreationYear": 1999,
+      "Price": 100.0,
+      "CarName": "T",
+      "CarMark": "R",
+      "DiscountPrice": 0.0,
+      "Arended": false,
+      "ArendPrice": 10.0,
+      "Id": "UH-71431",
+      "boughtDate": "2023-05-06T00:00:00+03:00",
+      "StartArendDate": null,
+      "EndArendDate": null
+    }
+  ],
+  "new": [
+    {
+      "CreationYear": 1999,
+      "Price": 100.0,
+      "CarName": "TT",
+      "CarMark": "ee",
+      "DiscountPrice": 0.0,
+      "Arended": false,
+      "ArendPrice": 45.0,
+      "Id": "QX-31541",
+      "boughtDate": "2023-05-08T00:00:00+03:00",
+      "StartArendDate": null,
+      "EndArendDate": null
+    }
+  ]
+}
