@@ -3,26 +3,39 @@
     "CreationYear": 1999,
     "Price": 100.0,
     "CarName": "sdf",
-    "CarMark": "ger",
+    "CarMark": "hrt",
     "DiscountPrice": 0.0,
-    "Arended": false,
+    "Arended": true,
     "ArendPrice": 10.0,
-    "Id": "RD-89580",
+    "Id": "YQ-65480",
     "boughtDate": null,
-    "StartArendDate": "2023-05-06T19:32:45.152967+03:00",
-    "EndArendDate": "2023-05-06T19:32:45.152967+03:00"
+    "StartArendDate": "2023-05-08T11:00:13.884635+03:00",
+    "EndArendDate": "2023-05-16T11:00:13.884635+03:00"
   },
   {
     "CreationYear": 1999,
     "Price": 100.0,
-    "CarName": "sdf",
-    "CarMark": "hrt",
+    "CarName": "TTTT",
+    "CarMark": "pp",
     "DiscountPrice": 0.0,
     "Arended": false,
     "ArendPrice": 10.0,
-    "Id": "YQ-65480",
+    "Id": "LF-18319",
     "boughtDate": null,
-    "StartArendDate": "2023-05-06T19:31:28.7139438+03:00",
-    "EndArendDate": "2023-05-11T19:31:28.7139438+03:00"
+    "StartArendDate": null,
+    "EndArendDate": null
+  },
+  {
+    "CreationYear": 1987,
+    "Price": 100.0,
+    "CarName": "Toyota",
+    "CarMark": "lalalal",
+    "DiscountPrice": 0.0,
+    "Arended": true,
+    "ArendPrice": 10.0,
+    "Id": "PB-30345",
+    "boughtDate": null,
+    "StartArendDate": "2023-05-08T18:07:57.506905+03:00",
+    "EndArendDate": "2023-05-18T18:07:57.506905+03:00"
   }
 ]

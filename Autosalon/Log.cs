@@ -43,5 +43,14 @@ namespace Autosalon
             Console.ResetColor();
         }
 
+        public static void Error(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("|---------------------------------------------");
+            Console.WriteLine($"|{text}");
+            Console.WriteLine("|---------------------------------------------");
+            Console.ResetColor();
+        }
+
     }
 }

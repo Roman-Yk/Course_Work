@@ -8,16 +8,44 @@
   },
   {
     "Username": "new",
-    "Money": 950.0,
+    "Money": 20749.0,
     "Password": "123",
     "IsAdmin": false,
-    "ArendedCars": []
+    "ArendedCars": [
+      {
+        "CreationYear": 1987,
+        "Price": 100.0,
+        "CarName": "Toyota",
+        "CarMark": "lalalal",
+        "DiscountPrice": 0.0,
+        "Arended": true,
+        "ArendPrice": 10.0,
+        "Id": "PB-30345",
+        "boughtDate": null,
+        "StartArendDate": "2023-05-08T18:07:57.506905+03:00",
+        "EndArendDate": "2023-05-18T18:07:57.506905+03:00"
+      }
+    ]
   },
   {
     "Username": "RRRRR",
-    "Money": 1000.0,
+    "Money": 920.0,
     "Password": "123",
     "IsAdmin": false,
-    "ArendedCars": []
+    "ArendedCars": [
+      {
+        "CreationYear": 1999,
+        "Price": 100.0,
+        "CarName": "sdf",
+        "CarMark": "hrt",
+        "DiscountPrice": 0.0,
+        "Arended": true,
+        "ArendPrice": 10.0,
+        "Id": "YQ-65480",
+        "boughtDate": null,
+        "StartArendDate": "2023-05-08T11:00:13.884635+03:00",
+        "EndArendDate": "2023-05-16T11:00:13.884635+03:00"
+      }
+    ]
   }
 ]

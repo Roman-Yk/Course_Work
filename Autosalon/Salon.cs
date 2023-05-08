@@ -273,6 +273,7 @@ namespace Autosalon
             Console.Write("Please amount of days you want arend a car: ");
             int days = Validator.IntValidation();
             bool found = false;
+
             for (int i = 0; i < Cars.Count; i++)
             {
                 if (Cars[i].Id == id &&!Cars[i].Arended)
@@ -313,7 +314,11 @@ namespace Autosalon
                 {
                     if(customer.ArendedCars[i].EndArendDate > time)
                     {
-                        Cars.Find(item => item.Id == id).Arended = false;
+                        ReturnBalanceToCustomer(customer, (customer.ArendedCars[i].EndArendDate.Value.Day - time.Day) * customer.ArendedCars[i].ArendPrice);
+                        Car car = Cars.Find(item => item.Id == id);
+                        car.Arended = false;
+                        car.StartArendDate = null;
+                        car.EndArendDate = null;
                         found = true;
                         customer.ArendedCars.Remove(customer.ArendedCars[i]);
                         Log.Success("Car returned");
@@ -328,8 +333,10 @@ namespace Autosalon
             Console.WriteLine();
         }
 
-        public void BuyCar(string id, Customer customer)
+        public void BuyCar(Customer customer)
         {
+            Console.Write("Please enter car id: ");
+            string id = Validator.StringValidation();
             for (int i = 0; i < Cars.Count; i++)
             {
                 if (Cars[i].Id == id && !Cars[i].Arended)
@@ -465,6 +472,82 @@ namespace Autosalon
             }
             Console.WriteLine();
         }
+
+        public void GetAllArendedCars()
+        {
+            bool found = false;
+            for(int i = 0; i < Customers.Count; i++)
+            {
+                if (Customers[i].ArendedCars.Count != 0)
+                {
+                    for (int j = 0; j < Customers[i].ArendedCars.Count; j++)
+                    {
+                        found = true;
+                        Log.Warning($"|Customer: {Customers[i].Username}\n{ Customers[i].ArendedCars[j]}\n|{Customers[i].ArendedCars[j].StartArendDate} - {Customers[i].ArendedCars[j].EndArendDate}");
+                    }
+                }
+            }
+            if (!found)
+            {
+                Log.Error("There are no arended cars");
+            }
+        }
+
+        public void GetCustomerBoughtCars()
+        {
+            Console.Write("Please enter customer's name: ");
+            string name = Validator.StringValidation();
+            int index = Customers.FindIndex(x => x.Username == name);
+            bool found = false;
+            if (index >= 0)
+            {
+                foreach (KeyValuePair<string, List<Car>> entry in BoughtCars)
+                {
+                    if(entry.Key == name)
+                    {
+                        foreach (Car car in entry.Value)
+                        {
+                            Log.Warning($"|Customer: {entry.Key}\n{car}");
+                        }
+                        found = true;
+                    }
+                }
+            }
+            else
+            {
+                Log.Error("Customer does not exists");
+            }
+            if (!found)
+            {
+                Log.Warning("Customer hasn't bought anything");
+            }
+        }
+
+        public void GetCustomersArendedCars()
+        {
+            Console.Write("Please enter customer's name: ");
+            string name = Validator.StringValidation();
+            int index = Customers.FindIndex(x => x.Username == name);
+            if (index >= 0)
+            {
+                if(Customers[index].ArendedCars.Count == 0)
+                {
+                    Log.Warning("That customer doesn't has arended cars");
+                }
+                else
+                {
+                    for (int i = 0; i < Customers[index].ArendedCars.Count; i++)
+                    {
+                        Log.Warning($"|Customer: {Customers[index].Username}\n{Customers[index].ArendedCars[i]}");
+                    }
+                }
+            }
+            else
+            {
+                Log.Error("Custopmer does not exists");
+            }
+
+        }
         
         public void AddCustomer(Customer customer)
         {
@@ -531,12 +614,18 @@ namespace Autosalon
                 Console.Write("Please enter money amount: ");
                 double money = Validator.DoubleValidation();
                 Customers[index].AddBalance(money);
+                Log.Success("Money were added to customer");
             }
             else
             {
                 Log.Warning("Customer does not exists");
             }
 
+        }
+
+        private void ReturnBalanceToCustomer(Customer activeCustomer, double sum)
+        {
+            activeCustomer.AddBalance(sum);
         }
 
         public void ChangeCarInfo()
@@ -550,6 +639,7 @@ namespace Autosalon
                 {
 
                     Cars[i].ChangeInfo();
+                    Log.Success("Car has been changed");
                     return;
                 }
                 else if(Cars[i].Id == id && Cars[i].Arended)
@@ -565,33 +655,47 @@ namespace Autosalon
 
         public void GetBoughtCars()
         {
+            bool found = false;
+
             foreach (KeyValuePair<string, List<Car>> entry in BoughtCars)
             { 
                 foreach(Car car in entry.Value)
                 {
                     Log.Warning($"|Customer: {entry.Key}\n{car}");
+                    found = true;
                 }
+            }
+            if (!found)
+            {
+                Log.Error("Nobody has'nt bought car yet");
             }
         }
 
         public void RemoveCar()
         {
+            
             Console.Write("Please enter car id: ");
             string id = Validator.StringValidation();
+            bool found = false;
 
             for (int i = 0; i < Cars.Count; i++)
             {
                 if (Cars[i].Id == id && !Cars[i].Arended)
                 {
+                    found = true;
                     Cars.Remove(Cars[i]);
+                    Log.Success("Car deleted");
                 }
                 else if (Cars[i].Id == id && Cars[i].Arended)
                 {
-                    Log.Warning("Can't delete car, car arended");
+                    found = true;
+                    Log.Error("Can't delete car, car arended");
                 }
             }
-
-            Log.Warning("Car not found");
+            if (!found)
+            {
+                Log.Error("Car not found");
+            }
             Console.WriteLine();
         }
 

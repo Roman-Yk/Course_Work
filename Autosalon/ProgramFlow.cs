@@ -86,9 +86,11 @@ namespace Autosalon
             Console.WriteLine("12) Add car");
             Console.WriteLine("13) Remove car"); 
             Console.WriteLine("14) Get all customers");
-            Console.WriteLine("15) Get my arended cars"); // get all arended cars from different customers
-            Console.WriteLine("16) Add money to customer");
-            Console.WriteLine("17) Get all bought cars");
+            Console.WriteLine("15) Get all arended cars");
+            Console.WriteLine("16) Get certain customer arended cars");
+            Console.WriteLine("17) Add money to customer");
+            Console.WriteLine("18) Get all bought cars");
+            Console.WriteLine("19) Get certain customer's bought cars");
             Console.WriteLine("Write 'exit' to quit");
 
             string user_input = Console.ReadLine();
@@ -151,15 +153,23 @@ namespace Autosalon
                     break;
 
                 case "15":
-                    ActiveCustomer.GetMyArendedCars();
+                    salon.GetAllArendedCars();
                     break;
 
                 case "16":
-                    salon.AddBalanceToCustomer();
+                    salon.GetCustomersArendedCars();
                     break;
 
                 case "17":
+                    salon.AddBalanceToCustomer();
+                    break;
+
+                case "18":
                     salon.GetBoughtCars();
+                    break;
+
+                case "19":
+                    salon.GetCustomerBoughtCars();
                     break;
 
                 case "exit":
@@ -239,7 +249,7 @@ namespace Autosalon
                     break;
 
                 case "12":
-                    salon.AddCar();
+                    salon.BuyCar(ActiveCustomer);
                     break;
 
                 case "13":
