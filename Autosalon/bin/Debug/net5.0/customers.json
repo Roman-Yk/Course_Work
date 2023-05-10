@@ -8,7 +8,7 @@
   },
   {
     "Username": "new",
-    "Money": 20749.0,
+    "Money": 20528.0,
     "Password": "123",
     "IsAdmin": false,
     "ArendedCars": [
@@ -47,5 +47,26 @@
         "EndArendDate": "2023-05-16T11:00:13.884635+03:00"
       }
     ]
+  },
+  {
+    "Username": "new2",
+    "Money": 260.0,
+    "Password": "123",
+    "IsAdmin": false,
+    "ArendedCars": []
+  },
+  {
+    "Username": "test",
+    "Money": 0.0,
+    "Password": "123",
+    "IsAdmin": false,
+    "ArendedCars": []
+  },
+  {
+    "Username": "test2",
+    "Money": 400.0,
+    "Password": "123",
+    "IsAdmin": false,
+    "ArendedCars": []
   }
 ]

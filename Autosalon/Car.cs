@@ -35,18 +35,18 @@ namespace Autosalon
 
         public void ChangeInfo()
         {
-            Console.Write("Write car's creation year: ");
+            Console.Write("Write new car's creation year or 0: ");
             int creationYear = Validator.IntValidation();
-            Console.Write("Write car's price: ");
+            Console.Write("Write new car's price or 0: ");
             double price = Validator.DoubleValidation();
-            Console.Write("Write car's name: ");
+            Console.Write("Write new car's name or 0: ");
             string carName = Validator.StringValidation();
-            Console.Write("Write car's mark: ");
+            Console.Write("Write new car's mark or 0: ");
             string mark = Validator.StringValidation();
-            Console.Write("Write car's arend price: ");
+            Console.Write("Write new car's arend price or 0: ");
             double arendPrice = Validator.DoubleValidation();
-            Console.Write("Write car's discount price price if there no discount write 0: ");
-            double discountPrice = Validator.DoubleValidation();
+            Console.Write("Write new car's discount price price if there no discount write 0 or -1: ");
+            double discountPrice = Validator.DoubleChangeValidation();
 
             if (discountPrice > price)
             {
@@ -58,7 +58,7 @@ namespace Autosalon
                 Log.Warning("Arend price can't be more that usual price");
                 Console.WriteLine();
             }
-            else if (creationYear < 1886)
+            else if (creationYear < 1886 && creationYear != 0)
             {
                 Console.WriteLine();
                 Log.Warning("The first car was created in 1886");
@@ -72,12 +72,12 @@ namespace Autosalon
             }
             else
             {
-                CreationYear = creationYear;
-                Price = price;
-                CarName = carName;
-                DiscountPrice = discountPrice;
-                ArendPrice = arendPrice;
-                CarMark = mark;
+                CreationYear = creationYear == 0? CreationYear : creationYear;
+                Price = price == 0 ? Price : price;
+                CarName = carName == "0" ? CarName : carName;
+                DiscountPrice = discountPrice == -1 ? DiscountPrice : discountPrice;
+                ArendPrice = arendPrice == 0 ? ArendPrice : arendPrice;
+                CarMark = mark == "0" ? CarMark : mark;
             }  
         }
 

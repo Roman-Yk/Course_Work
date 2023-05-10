@@ -65,7 +65,10 @@ namespace Autosalon
             {
                 if (Cars[i].Arended && Cars[i].EndArendDate <= DateTime.Now)
                 {
-                    Cars[i].Arended = false;
+                    Car car = Cars[i];
+                    car.Arended = false;
+                    car.StartArendDate = null;
+                    car.EndArendDate = null;
                 }
             }
             for (int i = 0; i < Customers.Count; i++)
@@ -308,13 +311,14 @@ namespace Autosalon
             string id = Validator.StringValidation();
             bool found = false;
             DateTime time = DateTime.Now;
+
             for (int i = 0; i < customer.ArendedCars.Count; i++)
             {
                 if (customer.ArendedCars[i].Id == id && customer.ArendedCars[i].Arended)
                 {
                     if(customer.ArendedCars[i].EndArendDate > time)
                     {
-                        ReturnBalanceToCustomer(customer, (customer.ArendedCars[i].EndArendDate.Value.Day - time.Day) * customer.ArendedCars[i].ArendPrice);
+                        ReturnBalanceToCustomer(customer, (customer.ArendedCars[i].EndArendDate.Value.Day - time.Day - 1) * customer.ArendedCars[i].ArendPrice);
                         Car car = Cars.Find(item => item.Id == id);
                         car.Arended = false;
                         car.StartArendDate = null;
@@ -583,8 +587,6 @@ namespace Autosalon
             string password = Validator.StringValidation();
             Console.WriteLine("Please repeat your password: ");
             string passwordRepeat = Validator.StringValidation();
-            Console.WriteLine("Please enter your money amount (1000,2): ");
-            double money = Validator.DoubleValidation();
             for (int i = 0; i < Customers.Count; i++)
             {
                 if (Customers[i].Username == username)
@@ -596,7 +598,7 @@ namespace Autosalon
             if (password == passwordRepeat)
             {
                 Log.Success("Registration successfull\nPlease Login");
-                AddCustomer(new Customer(username, money, password));
+                AddCustomer(new Customer(username, password));
             }
             else
             {
@@ -632,7 +634,7 @@ namespace Autosalon
         {
             Console.Write("Write car's id that you want to change: ");
             string id = Validator.StringValidation();
-
+            bool found = false;
             for (int i = 0; i < Cars.Count; i++)
             {
                 if (Cars[i].Id == id && !Cars[i].Arended)
@@ -640,16 +642,20 @@ namespace Autosalon
 
                     Cars[i].ChangeInfo();
                     Log.Success("Car has been changed");
+                    found = true;
                     return;
                 }
                 else if(Cars[i].Id == id && Cars[i].Arended)
                 {
                     Log.Warning("Car arended can't change info");
+                    found = true;
                     return;
                 }
             }
-
-            Log.Warning("Car not found");
+            if (!found)
+            {
+                Log.Warning("Car not found");
+            }
             Console.WriteLine();
         }
 
@@ -734,7 +740,10 @@ namespace Autosalon
 
         private void CreateCheck(Customer customer, Car car)
         {
+            Random random = new Random();
             car.boughtDate = DateTime.Today;
+            string filename = $"{customer.Username}_{random.Next(0, 999)}.txt";
+
             if (BoughtCars.ContainsKey(customer.Username))
             {
                 BoughtCars[customer.Username].Add(car);
@@ -743,7 +752,11 @@ namespace Autosalon
             {
                 BoughtCars.Add(customer.Username, new List<Car> { car });
             }
-            
+            using (StreamWriter writer = new StreamWriter(filename))
+            {
+                writer.WriteLine($"Bought by: {customer.Username}");
+                writer.WriteLine($"{car}");
+            }
         }
 
     }

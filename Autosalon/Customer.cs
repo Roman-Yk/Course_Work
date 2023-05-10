@@ -15,10 +15,10 @@ namespace Autosalon
         public List<Car> ArendedCars { get; set; }
 
 
-        public Customer(string name, double money, string password)
+        public Customer(string name, string password)
         {
             Username = name;
-            Money = money;
+            Money = 0;
             Password = password;
             ArendedCars = new List<Car> { };
             IsAdmin = false;

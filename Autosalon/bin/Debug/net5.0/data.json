@@ -13,19 +13,6 @@
     "EndArendDate": "2023-05-16T11:00:13.884635+03:00"
   },
   {
-    "CreationYear": 1999,
-    "Price": 100.0,
-    "CarName": "TTTT",
-    "CarMark": "pp",
-    "DiscountPrice": 0.0,
-    "Arended": false,
-    "ArendPrice": 10.0,
-    "Id": "LF-18319",
-    "boughtDate": null,
-    "StartArendDate": null,
-    "EndArendDate": null
-  },
-  {
     "CreationYear": 1987,
     "Price": 100.0,
     "CarName": "Toyota",

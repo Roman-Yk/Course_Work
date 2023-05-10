@@ -1,0 +1,9 @@
+Bought by: test2
+|Id: BU-58662
+|Name: Toyota
+|Mark: landcruser
+|Creation Year: 2020
+|Price: 100
+|Price with discount: No discount
+|Bought date:09.05.2023 0:00:00
+|Arend Price: 10

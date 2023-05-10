@@ -29,6 +29,16 @@ namespace Autosalon
             return num;
         }
 
+        public static double DoubleChangeValidation()
+        {
+            double num;
+            while (!double.TryParse(Console.ReadLine(), out num))
+            {
+                Console.Write("Write a number: ");
+            }
+            return num;
+        }
+
         public static int IntValidation()
         {
             int num;

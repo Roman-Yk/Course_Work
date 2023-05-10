@@ -1,0 +1,9 @@
+Bought by: new
+|Id: LF-18319
+|Name: Test
+|Mark: new mark
+|Creation Year: 2010
+|Price: 111
+|Price with discount: No discount
+|Bought date:09.05.2023 0:00:00
+|Arend Price: 10

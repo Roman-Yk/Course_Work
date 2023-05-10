@@ -1,0 +1,9 @@
+Bought by: new
+|Id: MV-35294
+|Name: asdf
+|Mark: jytr
+|Creation Year: 2002
+|Price: 100
+|Price with discount: No discount
+|Bought date:09.05.2023 0:00:00
+|Arend Price: 10
